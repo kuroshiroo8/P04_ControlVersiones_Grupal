@@ -32,7 +32,7 @@ cuadroPass.config(show="*")
 
 def login():
  #Conectar con DB
- db = sqlite3.connect('/Users/dell/Downloads/P04_ControlVersiones_Grupal/Usuarios.db')
+ db = sqlite3.connect('Usuarios.db')
  c = db.cursor()
 
  usuario = cuadroUser.get()
