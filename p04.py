@@ -1,5 +1,7 @@
 #libreria para trabajar la interfaz grafica de python
 from tkinter import *
+from tkinter.messagebox import *
+import sqlite3
 
 #raiz para la interfaz grafica de python
 raiz=Tk()
@@ -28,9 +30,25 @@ cuadroPass=Entry(miFrame,text="Pass")
 cuadroPass.grid(row=1,column=1, padx=10, pady=10)
 cuadroPass.config(show="*")
 
+def login():
+ #Conectar con DB
+ db = sqlite3.connect('/Users/dell/Downloads/P04_ControlVersiones_Grupal/Usuarios.db')
+ c = db.cursor()
+
+ usuario = cuadroUser.get()
+ contra = cuadroPass.get()
+
+ c.execute('SELECT * FROM USUARIOS WHERE USUARIO = ? AND CONTRASENA = ?', (usuario, contra))
+
+ if c.fetchall():
+  showinfo(title = "Login correcto", message = "Usuario y contraseña correctos")
+ else:
+  showerror(title = "Login incorrecto", message = "Usuario o contraseña incorrecta")
+   
+ c.close()
+
 #boton para login
 #def codigoBoton():
-botonEnvio=Button(miFrame,text="Login")#command=codigoBoton
-botonEnvio.grid(row=2,column=0, columnspan=2, padx=10, pady=10)
+Button (text="Login", command = login).pack()#command=codigoBoton
 
 raiz.mainloop()
