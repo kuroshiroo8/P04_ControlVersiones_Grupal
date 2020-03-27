@@ -41,7 +41,9 @@ def login():
  c.execute('SELECT * FROM USUARIOS WHERE USUARIO = ? AND CONTRASENA = ?', (usuario, contra))
 
  if c.fetchall():
-  showinfo(title = "Login correcto", message = "Usuario y contraseña correctos")
+ 	#inventario es un funcion que manda a llamar la otra interfaz
+ 	inventario()
+  #showinfo(title = "Login correcto", message = "Usuario y contraseña correctos")
  else:
   showerror(title = "Login incorrecto", message = "Usuario o contraseña incorrecta")
    
@@ -50,5 +52,40 @@ def login():
 #boton para login
 #def codigoBoton():
 Button (text="Login", command = login).pack()#command=codigoBoton
+#funcion de la interfaz de inventario
+def inventario():
+	#cierra la ventana actual
+	raiz.withdraw()
+	#win es mi sig ventana
+	inv=Tk()
+	inv.title("INVENTARIO")
+	inv.resizable(0,0)
+	#raiz.iconbitmap("covid-19.ico")
+	inv.geometry("640x480")
+
+	
+	#frame para la interfaz grafica de python para inventario
+	miFrame=Frame()
+	miFrame.pack()
+	miFrame.config(width="620", height="460")
+	labelEncabezado = Label(inv,text="INVENTARIO DE PRODUCTOS")
+	labelEncabezado.grid(row=0,column=0,sticky="NW")
+	labelEncabezado.place(x=250,y=10)
+
+	labelProducto = Label(inv,text="aqui iran todos los producto que se registraron \nen al base de datos con sus respectivas caracteristicas")
+	labelProducto.grid(row=0,column=0,sticky="NW")
+	labelProducto.place(x=200,y=100)
+
+	#este boton te redirigira a otra ventana
+	Button(inv, text='AGREGAR PRODUCTOS', command=inv.destroy).place(x=100,y=300)
+	#este boton te redirigira a otra ventana
+	Button(inv, text='EDITAR PRODUCTOS', command=inv.destroy).place(x=250,y=300)
+	#este boton te redirigira a otra ventana
+	Button(inv, text='ELIMINAR PRODUCTOS', command=inv.destroy).place(x=400,y=300)
+	#ejemplo de como redirigirse a otra ventana con un botton
+	#el codigo de aqui abajo
+	#Button(ventana, text='AGREGAR PRODUCTOS', command=abrirventana).place(x=270,y=150)
+
 
 raiz.mainloop()
+
