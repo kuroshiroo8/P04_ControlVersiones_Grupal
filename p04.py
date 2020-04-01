@@ -58,44 +58,74 @@ Button (text="Login", command = login).pack()#command=codigoBoton
 
 
 #Funcion Agregar Poductos
-def venAgregarP(inv):	
-	inv.withdraw()
-	agregarWin=Tk()
-	agregarWin.title("REGISTRAR PRODUCTOS")
-	agregarWin.resizable(0,0)
-	agregarWin.geometry("640x480")
-	#label de encabezado
-	labelEncabezado = Label(agregarWin,text="REGISTRO DE PRODUCTOS")
-	labelEncabezado.grid(row=0,column=0,sticky="NW")
-	labelEncabezado.place(x=250,y=10)
-	#label de usuario para Producto
-	labelCodigo=Label(agregarWin,text="Codigo:")
-	labelCodigo.grid(row=0,column=0,sticky="e",padx=20, pady=100)
-	cuadroCodigo=Entry(agregarWin,textvariable="Code")
-	cuadroCodigo.grid(row=0,column=1, sticky="e",padx=20, pady=100)
+def venRegistrar():
+    #windows.withdraw()
+ 
+    RegistrarWin=tk.Toplevel()
+    RegistrarWin.title("REGISTRAR")
+    RegistrarWin.resizable(0,0)
+    RegistrarWin.iconbitmap("13.ico")
+    RegistrarWin.geometry("550x550")
 
-	#label de usuario para Precio
-	labelNombre=Label(agregarWin,text="Nombre:")
-	labelNombre.grid(row=0,column=2,sticky="e",padx=1, pady=5)
-	cuadroNombre=Entry(agregarWin,textvariable="User")
-	cuadroNombre.grid(row=0,column=3, sticky="e",padx=30, pady=5)
+    e1=tk.Label(RegistrarWin, text="AGREGAR PRODUCTOS :",bg="white",fg="black").place(x=50, y=20)
+ 
+# variable codigo
+    entrycodigo=tk.StringVar()
+    codigotx=tk.Entry(RegistrarWin,textvariable=entrycodigo).place(x=40, y=120)
+   
+# variable producto
+    entryproducto=tk.StringVar()
+    productotx=tk.Entry(RegistrarWin,textvariable=entryproducto).place(x=40, y=170)
+    
+# variable cantidad
+    entrycantidad=tk.StringVar()
+    cantidadtx=tk.Entry(RegistrarWin,textvariable=entrycantidad).place(x=40, y=220)
 
-	#label de usuario para cantidad
-	labelCantidad=Label(agregarWin,text="Cantidad:")
-	labelCantidad.grid(row=1,column=0,sticky="e",padx=15, pady=5)
-	cuadroCantidad=Entry(agregarWin,textvariable="Cant")
-	cuadroCantidad.grid(row=1,column=1, sticky="e",padx=15, pady=5)
+# variable  precio
+    entryprecio=tk.StringVar()
+    preciotx=tk.Entry(RegistrarWin,textvariable=  entryprecio).place(x=40, y=270)
+    
+# Etiqueta para "INGRESE CODIGO DEL PRODUCTO"
+    etiquetacodigo=tk.Label(RegistrarWin, text="INGRESE CODIGO DEL PRODUCTO.", padx=10 ).place(x=30, y=100)
+    
+# Etiqueta para "INGRESE NOMBRE DEL PRODUCTO"
+    etiquetanombre=tk.Label(RegistrarWin, text="INGRESE NOMBRE DEL PRODUCTO.", padx=10 ).place(x=30, y=150)
 
-	#label de usuario para Codigo
-	labelPrecio=Label(agregarWin,text="Precio:")
-	labelPrecio.grid(row=1,column=2,sticky="e",padx=20, pady=5)
-	cuadroPrecio=Entry(agregarWin,textvariable="Costo")
-	cuadroPrecio.grid(row=1,column=3, sticky="e",padx=15, pady=5)
+# Etiqueta para "INGRESE NOMBRE DEL CANTIDAD"
+    etiquetacantidad=tk.Label(RegistrarWin, text="INGRESE CANTIDAD DEL PRODUCTO.", padx=10 ).place(x=30, y=200)
+   
 
-	Button(agregarWin, text='AGREGAR', command=agregarWin.destroy).place(x=150,y=300)
-	
-	Button(agregarWin, text='REGRESAR', command=partial(regresar,agregarWin)).place(x=350,y=300)
+#Etiqueta para "INGRESE PRECIO DEL PRODUCTO"
+    etiquetaprecio = tk.Label(RegistrarWin, text="INGRESE PRECIO DEL PRODUCTO", padx=10 ).place(x=30, y=250)
 
+   ## Boton menu  
+
+    menu=tk.Button(RegistrarWin, text="MENU", fg="red",font=("arial", 12),cursor = "hand2",relief = "raised",command = RegistrarWin.destroy)
+    menu.pack()
+    menu.place(x=50,y=350)
+
+    def guarda():
+
+            db = sqlite3.connect("articulos.db")
+            c = db.cursor()
+
+            codigo = entrycodigo.get()
+            nombre = entryproducto.get()
+            cantidad = entrycantidad.get()
+            precio = entryprecio.get()
+          
+
+            c.execute("insert into articulos (codigo,nombre,cantidad,precio) values ('"+codigo+"','"+nombre+"','"+cantidad+"','"+precio+"')")
+            db.commit()
+            c.close()
+            messagebox.showinfo("MODIFICACION","ARTICULO INGRESADO" )
+            RegistrarWin.destroy()
+            venRegistrar()
+
+    btguardar = tk.Button(RegistrarWin, text =  "GUARDAR", fg="blue",font=("arial", 12),cursor = "hand2",relief = "raised",command = guarda)
+    btguardar.pack()
+    btguardar.place(x=300,y=350)
+    
 ########################interfaz para ver los productos
 def venMostrar():
     #windows.withdraw()
@@ -130,27 +160,47 @@ def venMostrar():
 
 
 
-def venBorrarP(inv):
-	inv.withdraw()
-	borrarWin=Tk()
-	borrarWin.title("ELIMINAR PRODUCTOS")
-	borrarWin.resizable(0,0)
-	borrarWin.geometry("640x480")
-	raiz.config(backgroun="grey",padx=15, pady=80)
-	labelEncabezado = Label(borrarWin,text="ELIMINAR PRODUCTO")
-	labelEncabezado.grid(row=0,column=0,sticky="NW")
-	labelEncabezado.place(x=250,y=10)
+def venBorrar():
+    EliminarWin=tk.Toplevel()
+    EliminarWin.title("ELIMINAR")
+    EliminarWin.resizable(0,0)
+    EliminarWin.iconbitmap("14.ico")
+    EliminarWin.geometry("512x512")
+    e1=tk.Label(EliminarWin, text=" ELIMINAR PRODUCTOS :",bg="white",fg="black").place(x=50, y=50)
+    
+#### VARIABLE PARA ID
+    
+    entry_id=tk.StringVar()
+    productotx=tk.Entry(EliminarWin,textvariable=entry_id).place(x=50, y=150)
 
-	labelEliminar=Label(borrarWin,text="Codigo Del Producto:")
-	labelEliminar.grid(row=0,column=0,sticky="e",padx=80, pady=150)
-	cuadroEliminar=Entry(borrarWin,text="Code")
-	cuadroEliminar.grid(row=0,column=1, sticky="e",padx=30, pady=160)
+#### ETIQUETA PARA ID
 
-	Button(borrarWin, text='ELIMINAR', command=borrarWin.destroy).place(x=210,y=300)
-	
-	Button(borrarWin, text='REGRESAR', command=partial(regresar,borrarWin)).place(x=290,y=300)
-    #interfaz para modificar el productos
-  
+    etiquetanombre=tk.Label(EliminarWin, text="INGRESE CODIGO DEL PRODUCTO", padx=10 ).place(x=30, y=115)
+#
+    def eliminar():
+        db = sqlite3.connect("articulos.db")
+        c = db.cursor()
+
+        
+        id_producto = entry_id.get()
+        c.execute("DELETE  from articulos where codigo = ('"+id_producto+"')")
+        messagebox.showinfo("MODIFICACION","ARTICULO ELIMINADO" )
+
+        db.commit()
+        c.close()
+        EliminarWin.destroy()
+        venBorrar()
+        
+#### BOTON PARA MENU
+    
+    menu=tk.Button(EliminarWin, text="MENU", fg="red",font=("arial", 12),cursor = "hand2",relief = "raised",command = EliminarWin.destroy)
+    menu.pack()
+    menu.place(x=50,y=350)
+#### BOTON PARA ELIMINAR
+    bt_eliminar = tk.Button(EliminarWin, text =  "ELIMINAR PRODUCTOS", fg="blue",font=("arial", 12),cursor = "hand2",relief = "raised",command = eliminar)
+    bt_eliminar.pack()
+    bt_eliminar.place(x=280,y=350)
+     
  ###################### VENTANA PARA MODIFICAR
 
 def venEditar():
@@ -235,7 +285,7 @@ def principal():
 	lbl_Encabezado.grid(row=0,column=0,sticky="NW")
 	lbl_Encabezado.place(x=250,y=10)
 	#boton para dirigirse a la interfaz de agregar producto
-	bt_add=tk.Button(inv,text="Agregar Producto", command = inv.destroy)
+	bt_add=tk.Button(inv,text="Agregar Producto", command = venRegistrar)
 	bt_add.pack()
 	bt_add.place(x=5,y=50)
 	#boton para dirigirse a la interfaz de mostrar producto
@@ -243,7 +293,7 @@ def principal():
 	bt_view.pack()
 	bt_view.place(x=5,y=150)
 	#boton para dirigirse a la interfaz de eliminar producto
-	bt_delet=tk.Button(inv,text="Eliminar Producto",  command = inv.destroy)
+	bt_delet=tk.Button(inv,text="Eliminar Producto",  command = venBorrar)
 	bt_delet.pack()
 	bt_delet.place(x=5,y=250)
 	#boton para dirigirse a la interfaz de modificar producto
