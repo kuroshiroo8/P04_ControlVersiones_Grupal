@@ -133,21 +133,33 @@ def venMostrar():
     MostrarWin.geometry("640x480")
     e1=tk.Label(MostrarWin, text="VER PRODUCTOS :",bg="white",fg="black").place(x=50, y=50),
     lbl_code=tk.Label(MostrarWin, text="CODIGO",bg="white",fg="black").place(x=50, y=70)
-    lbl_name=tk.Label(MostrarWin, text="NOMBRE",bg="white",fg="black").place(x=110, y=70)
-    lbl_cant=tk.Label(MostrarWin, text="CANTIDAD",bg="white",fg="black").place(x=180, y=70)
-    lbl_prec=tk.Label(MostrarWin, text="PRECIO",bg="white",fg="black").place(x=260, y=70)
+    lbl_name=tk.Label(MostrarWin, text="NOMBRE",bg="white",fg="black").place(x=150, y=70)
+    lbl_cant=tk.Label(MostrarWin, text="CANTIDAD",bg="white",fg="black").place(x=250, y=70)
+    lbl_prec=tk.Label(MostrarWin, text="PRECIO",bg="white",fg="black").place(x=350, y=70)
 
   ###########consulta para mostrar los productos de la base
     def mostrar():
 ##        codigo
-        lista=tk.Listbox(MostrarWin, width = 50, font=("arial", 12), height =15 )
+        lista=tk.Listbox(MostrarWin, width = 11, font=("arial", 12), height =15 )
         lista.pack()
+        lista_3=tk.Listbox(MostrarWin, width = 5, font=("arial", 12), height =15 )
+        lista_3.pack()
+        lista_2=tk.Listbox(MostrarWin, width = 11, font=("arial", 12), height =15 )
+        lista_2.pack()
+       	lista_1=tk.Listbox(MostrarWin, width = 11, font=("arial", 12), height =15 )
+        lista_1.pack()
         db = sqlite3.connect("articulos.db")
         c = db.cursor()
-        c.execute( "select *from articulos  ORDER BY (ID)DESC" )
+        c.execute( "select  *from articulos  ORDER BY (ID)DESC" )
         for row in c:
-            lista.insert(0,str(row[1])+" --------"+ row[2]+"--------"+ str(row[3])+"--------"+ str(row[4]))
-            lista.place(x=50,y=90)
+           lista.insert(0,row[2])
+           lista.place(x=150,y=90)
+           lista_1.insert(0,row[1])
+           lista_1.place(x=50,y=90)
+           lista_2.insert(0,str(row[3]))
+       	   lista_2.place(x=250,y=90)
+       	   lista_3.insert(0,str(row[4]))
+           lista_3.place(x=350,y=90)
 
 
     menu=tk.Button(MostrarWin, text="MENU", fg="red",command = MostrarWin.destroy)
