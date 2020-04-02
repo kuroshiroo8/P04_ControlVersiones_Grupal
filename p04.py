@@ -350,21 +350,35 @@ def venMostrarM():
     MostrarWinM=tk.Toplevel()
     MostrarWinM.geometry("640x480")
     e1=tk.Label(MostrarWinM, text="VER MERMAS :",bg="white",fg="black").place(x=50, y=50),
-    lbl_code=tk.Label(MostrarWinM, text="CODIGO",bg="white",fg="black").place(x=50, y=70)
-    lbl_name=tk.Label(MostrarWinM, text="NOMBRE",bg="white",fg="black").place(x=110, y=70)
-    lbl_cant=tk.Label(MostrarWinM, text="CANTIDAD",bg="white",fg="black").place(x=180, y=70)
+    lbl_code=tk.Label(MostrarWinM, text="CODIGO",bg="white",fg="black").place(x=150, y=70)
+    lbl_name=tk.Label(MostrarWinM, text="NOMBRE",bg="white",fg="black").place(x=250, y=70)
+    lbl_cant=tk.Label(MostrarWinM, text="CANTIDAD",bg="white",fg="black").place(x=350, y=70)
 
   ###########consulta para mostrar los productos de la base
     def mostrarM():
 ##        codigo
-        lista=tk.Listbox(MostrarWinM, width = 50, font=("arial", 12), height =15 )
+
+
+        ##
+        lista=tk.Listbox(MostrarWinM, width = 11, font=("arial", 12), height =15 )
         lista.pack()
+        lista_2=tk.Listbox(MostrarWinM, width = 11, font=("arial", 12), height =15 )
+        lista_2.pack()
+       	lista_1=tk.Listbox(MostrarWinM, width = 11, font=("arial", 12), height =15 )
+        lista_1.pack()
         db = sqlite3.connect("articulos.db")
         c = db.cursor()
         c.execute( "select *from tbMerma  ORDER BY (ID)DESC" )
         for row in c:
-            lista.insert(0,str(row[1])+" --------"+ row[2]+"--------"+ str(row[3]))
-            lista.place(x=50,y=90)
+          
+
+            lista.insert(0,row[2])
+            lista.place(x=250,y=90)
+            lista_1.insert(0,str(row[1]))
+            lista_1.place(x=150,y=90)
+            lista_2.insert(0,str(row[3]))
+       	    lista_2.place(x=350,y=90)
+       	   
 
 
     menu=tk.Button(MostrarWinM, text="MENU", fg="red",command = MostrarWinM.destroy)
