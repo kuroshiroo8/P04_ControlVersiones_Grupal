@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
+from matplotlib import pyplot
 from tkinter.messagebox import *
 
 #raiz para la interfaz grafica de python
@@ -305,6 +306,9 @@ def venRegistrarM():
 # variable cantidad
     entrycantidad=tk.StringVar()
     cantidadtx=tk.Entry(RegistrarWinM,textvariable=entrycantidad).place(x=40, y=220)
+# variable semana
+    entrysemana=tk.StringVar()
+    semanatx=tk.Entry(RegistrarWinM,textvariable=entrysemana).place(x=40, y=270)    
     
 # Etiqueta para "INGRESE CODIGO DEL PRODUCTO"
     etiquetacodigo=tk.Label(RegistrarWinM, text="INGRESE CODIGO DE MERMA.", padx=10 ).place(x=30, y=100)
@@ -314,7 +318,9 @@ def venRegistrarM():
 
 # Etiqueta para "INGRESE NOMBRE DEL CANTIDAD"
     etiquetacantidad=tk.Label(RegistrarWinM, text="INGRESE CANTIDAD DE MERMA.", padx=10 ).place(x=30, y=200)
-   
+
+# Etiqueta para "INGRESE SEMANA DE MERMA"
+    etiquetasemana=tk.Label(RegistrarWinM, text="INGRESE SEMANA DE MERMA.", padx=10 ).place(x=30, y=250)   
 
    ## Boton menu  
 
@@ -330,9 +336,10 @@ def venRegistrarM():
             codigo = entrycodigo.get()
             nombre = entryproducto.get()
             cantidad = entrycantidad.get()
+            semana = entrysemana.get()
           
 
-            c.execute("insert into tbMerma (codigo,nombre,cantidad) values ('"+codigo+"','"+nombre+"','"+cantidad+"')")
+            c.execute("insert into tbMerma (codigo,nombre,cantidad,semana) values ('"+codigo+"','"+nombre+"','"+cantidad+"','"+semana+"')")
             db.commit()
             c.close()
             messagebox.showinfo("MODIFICACION","MERMA INGRESADA" )
@@ -388,6 +395,42 @@ def venMostrarM():
     bt_mostrar = tk.Button(MostrarWinM, text =  "MOSTRAR MERMAS", fg="green",command = mostrarM)
     bt_mostrar.pack()
     bt_mostrar.place(x=280,y=400)
+
+    bt_mostrar = tk.Button(MostrarWinM, text =  "MOSTRAR GRAFICA", fg="red",command = mostrarG)
+    bt_mostrar.pack()
+    bt_mostrar.place(x=480,y=400)
+def mostrarG():
+    semana1=0
+    semana2=0
+    semana3=0
+    semana4=0
+    db = sqlite3.connect("articulos.db")
+    c = db.cursor()
+    c.execute( "select semana from tbMerma where semana=1" )
+    for row in c:
+     semana1=semana1+1
+    print(semana1) 
+    c.execute( "select semana from tbMerma where semana=2" )
+    for row in c:
+     semana2=semana2+1
+    print(semana2) 
+    c.execute( "select semana from tbMerma where semana=3" )
+    for row in c:
+     semana3=semana3+1
+    print(semana3) 
+    c.execute( "select semana from tbMerma where semana=4" )
+    for row in c:
+     semana4=semana4+1
+    print(semana4) 
+    mermas=('Semana 1','Semana 2','Semana 3','Semana 4')
+    slices=(semana1,semana2,semana3,semana4)
+    colores=('red','blue','yellow','green')
+    pyplot.rcParams['toolbar']='None'
+    pyplot.pie(slices,colors=colores, autopct='%1.1f%%')
+    pyplot.axis('equal')
+    pyplot.title('Grafica de mermas\n\n')    
+    pyplot.legend(labels=mermas)
+    pyplot.show()
 
 #####################################################################################################################
 
