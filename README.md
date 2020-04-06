@@ -109,13 +109,17 @@ Aparte tambien tiene un boton para cancelar y regresar al menu.
 
 ***Ver merma***  
 
-![Ver merma](https://raw.githubusercontent.com/kuroshiroo8/P04_ControlVersiones_Grupal/master/img/009.png "Título alternativo")  
+![Ver merma](https://raw.githubusercontent.com/kuroshiroo8/P04_ControlVersiones_Grupal/master/img/009.png "Ver merma")  
 
 Si en la ventana de Inventario de Administrador de mermas se pulsa el boton de  
 **Ver merma** se abrira esta ventana, donde si se pulsa el boton de  
 **mostrar mermas** se mostrara una lista de todas las mermas agregadas  
 con anterioridad que se encuentran en la base de datos.  
+Si se pulsa el boton de **mostrar grafica** se abrira una ventana con una  
+grafica de las mermas registradas por semana.  
 Aparte tambien tiene un boton para cancelar y regresar al menu.  
+
+![Grafica de mermas](https://raw.githubusercontent.com/kuroshiroo8/P04_ControlVersiones_Grupal/master/img/012.png "Grafica de mermas")  
 
 ***Eliminar merma***  
 
